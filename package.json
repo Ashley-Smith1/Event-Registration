@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts"
   },
@@ -26,11 +26,13 @@
   "dependencies": {
     "express": "^5.3.0",
     "firebase-admin": "^14.5.0",
-    "joi": "^18.3.2"
+    "joi": "^18.3.2",
+    "morgan": "^1.12.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^26.6.6",
     "@types/supertest": "^7.2.1",
     "eslint": "^10.14.0",
