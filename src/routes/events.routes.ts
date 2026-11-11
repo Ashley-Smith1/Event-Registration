@@ -3,6 +3,8 @@ import { db } from "../../config/firebaseConfig";
 import { HTTP_STATUS } from "../api/v1/httpStatus";
 import { validateEvent } from "../middleware/validateEvent";
 
+console.log("EVENT ROUTES FILE LOADED");
+
 const router = Router();
 
 // GET - Retrieve all events from Firestore
@@ -45,8 +47,8 @@ router.post("/", validateEvent, async (req, res) => {
             updatedAt: now
         };
 
-        // Save the event to Firestore
-        await eventRef.set(newEvent);
+// Save the event to Firestore
+await eventRef.set(newEvent);
 
         res.status(HTTP_STATUS.CREATED).json({
             message: "Event created",
@@ -57,6 +59,34 @@ router.post("/", validateEvent, async (req, res) => {
 
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             message: "Failed to create event"
+        });
+    }
+});
+
+// GET one event by ID
+router.get("/:id", async (req, res) => {
+    try {
+        const eventId = req.params.id;
+
+        const eventDoc = await db.collection("events").doc(eventId).get();
+
+        if (!eventDoc.exists) {
+            res.status(HTTP_STATUS.NOT_FOUND).json({
+                message: "Event not found"
+            });
+            return;
+        }
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Event retrieved",
+            data: eventDoc.data()
+        });
+
+    } catch (error) {
+        console.error("Error retrieving event:", error);
+
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+            message: "Failed to retrieve event"
         });
     }
 });
