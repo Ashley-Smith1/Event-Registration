@@ -51,7 +51,7 @@ export const eventData = {
         "id": "evt_000005",
         "name": "Tech Conference 2025",
         "date": "2025-12-25T09:00:00:00Z",
-        "capacity": 200,
+        "capacity": 100,
         "registration": 50,
         "status": "active",
         "category": "conference",

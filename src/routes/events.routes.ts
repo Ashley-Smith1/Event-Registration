@@ -8,7 +8,10 @@ const router = Router();
 // GET - Retrieve all events from Firestore
 router.get("/", async (req, res) => {
     try {
-        const snapshot = await db.collection("events").get();
+        const snapshot = await db
+            .collection("events")
+            .orderBy("id", "asc")
+            .get();
 
         const events = snapshot.docs.map((doc) => doc.data());
 
