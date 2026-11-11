@@ -1,6 +1,7 @@
 import express from "express";
 import eventRoutes from "./routes/events.routes";
 import morgan from "morgan";
+import { HTTP_STATUS } from "./api/v1/httpStatus";
 
 const app = express();
 
@@ -12,8 +13,12 @@ app.use(morgan("dev"));
 
 // Health check endpoint
 app.get("/health", (req, res) => {
-    res.status(200).json({ status: "OK",
-    message: "Event Registration API is running" });
+    res.status(HTTP_STATUS.OK).json({
+        status: "OK",
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString(),
+        version: "1.0.0"
+    });
 });
 
 // Register the event routes

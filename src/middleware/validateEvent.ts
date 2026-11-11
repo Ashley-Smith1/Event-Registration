@@ -6,13 +6,13 @@ export const validateEvent = (
     res: Response,
     next: NextFunction
 ) => {
-    const { error } = eventSchema.validate(req.body);
+    const { error, value } = eventSchema.validate(req.body);
     if (error) {
         res.status(400).json({
-            message: "Validation failed",
-            error: error.details[0].message,
+            message: `Validation error: ${error.details[0].message}`,
         });
         return;
     }
+    req.body = value;
     next();
 };
